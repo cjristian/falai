@@ -1,0 +1,22 @@
+{% extends "generator/base.html" %}
+
+{% block title %}{{ image.prompt }}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="card" style="max-width: 720px; margin: 0 auto;">
+    
+    <h2 class="item-title">{{ image.prompt }}</h2>
+    
+    <p class="meta">
+      Created at {{ image.created }}
+    </p>
+
+    <img src="{{ image.image.url }}" alt="{{ image.prompt }}">
+
+    <div style="margin-top: 16px;">
+      <a href="{% url 'generator:image_list' %}" class="btn btn-primary">← Back to gallery</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

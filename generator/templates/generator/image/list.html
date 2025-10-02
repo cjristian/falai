@@ -1,0 +1,46 @@
+{% extends "generator/base.html" %}
+{% block title %}Gallery{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">Generador de imágenes con AI</h1>
+
+  <section class="layout">
+  
+    <div class="gallery">
+      {% for image in images %}
+        <article class="card">
+          <h2 class="item-title">
+            <a class="title-link" href="{{ image.get_absolute_url }}">
+              {{ image.prompt|truncatewords:12 }}
+            </a>
+          </h2>
+          <p class="meta">Created at {{ image.created }}</p>
+          <img src="{{ image.image.url }}" alt="{{ image.prompt }}">
+        </article>
+      {% empty %}
+        <p>No images yet.</p>
+      {% endfor %}
+
+      {% include "pagination.html" with page=images %}
+    </div>
+
+    
+    <aside class="form-pane">
+      <form class="form-card" method="post" action="{% url 'generator:generate_image' %}">
+        {% csrf_token %}
+        <div class="form-header">
+          <h3>Generar nueva imagen</h3>
+          <p>Describe con claridad lo que quieres ver.</p>
+        </div>
+
+        <div class="form-row">
+          <textarea name="prompt" rows="6" placeholder="Ej: retrato cinematográfico, luz lateral suave, 85mm, fondo desenfocado..."></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Generar</button>
+        </div>
+      </form>
+    </aside>
+  </section>
+{% endblock %}
