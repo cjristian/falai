@@ -38,7 +38,6 @@ def generate_image(request):
             try:
                 data = generate_image_bytes(prompt)
             except Exception as e:
-                # (opcional) añade mensajes si quieres mostrar el error en la UI
                 print("FAL error:", e)
                 return redirect("generator:image_list")
 
